@@ -1,0 +1,178 @@
+const Minesweeper = require('./Minesweeper');
+
+class MinesweeperRenderer {
+  constructor(container) {
+    this.container = container;
+    this.difficulty = 'beginner';
+    this.game = null;
+    this.timerInterval = null;
+    this.gameInstance = typeof module !== 'undefined' && module.exports ? Minesweeper : window.Minesweeper;
+  }
+
+  init() {
+    this.game = new this.gameInstance(this.difficulty);
+    this.render();
+    this.bindEvents();
+  }
+
+  render() {
+    const { rows, cols } = this.game;
+    let gridHTML = '';
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        gridHTML += `<div class="cell" data-row="${row}" data-col="${col}"></div>`;
+      }
+    }
+
+    this.container.innerHTML = `
+      <div class="game-container">
+        <div class="game-header">
+          <h1>扫雷</h1>
+          <div class="difficulty-selector">
+            <button data-diff="beginner" class="${this.difficulty === 'beginner' ? 'active' : ''}">初级</button>
+            <button data-diff="intermediate" class="${this.difficulty === 'intermediate' ? 'active' : ''}">中级</button>
+            <button data-diff="expert" class="${this.difficulty === 'expert' ? 'active' : ''}">高级</button>
+          </div>
+        </div>
+        <div class="game-panel">
+          <div class="mine-counter">010</div>
+          <button class="smiley-button">😊</button>
+          <div class="timer">000</div>
+        </div>
+        <div class="grid" style="--cols: ${cols};">
+          ${gridHTML}
+        </div>
+      </div>
+    `;
+  }
+
+  updateGrid() {
+    const grid = this.game.getGrid();
+    for (let row = 0; row < grid.length; row++) {
+      for (let col = 0; col < grid[row].length; col++) {
+        const cell = this.container.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        if (!cell) continue;
+
+        const cellData = grid[row][col];
+        cell.className = 'cell';
+        cell.removeAttribute('data-number');
+
+        if (cellData.revealed) {
+          cell.classList.add('revealed');
+          if (cellData.neighborMines > 0) {
+            cell.textContent = cellData.neighborMines;
+            cell.setAttribute('data-number', cellData.neighborMines);
+          } else {
+            cell.textContent = '';
+          }
+        }
+        if (cellData.flagged) {
+          cell.classList.add('flagged');
+          cell.textContent = '🚩';
+        }
+        if (cellData.hasMine && this.game.gameOver) {
+          cell.classList.add('mine');
+          cell.textContent = '💣';
+        }
+      }
+    }
+  }
+
+  updateDisplay() {
+    const counter = this.container.querySelector('.mine-counter');
+    if (counter) {
+      counter.textContent = String(this.game.getMineCounter()).padStart(3, '0');
+    }
+
+    const timer = this.container.querySelector('.timer');
+    if (timer && this.game.startTime) {
+      const elapsed = this.game.endTime
+        ? Math.floor((this.game.endTime - this.game.startTime) / 1000)
+        : Math.floor((Date.now() - this.game.startTime) / 1000);
+      timer.textContent = String(Math.min(elapsed, 999)).padStart(3, '0');
+    }
+
+    const smiley = this.container.querySelector('.smiley-button');
+    if (smiley) {
+      if (this.game.won) {
+        smiley.textContent = '😎';
+      } else if (this.game.gameOver) {
+        smiley.textContent = '😵';
+      } else {
+        smiley.textContent = '😊';
+      }
+    }
+  }
+
+  setDifficulty(difficulty) {
+    this.difficulty = difficulty;
+    clearInterval(this.timerInterval);
+    this.timerInterval = null;
+    this.game = new this.gameInstance(difficulty);
+    this.render();
+    this.bindEvents();
+  }
+
+  reset() {
+    clearInterval(this.timerInterval);
+    this.timerInterval = null;
+    this.game = new this.gameInstance(this.difficulty);
+    this.render();
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    const cells = this.container.querySelectorAll('.cell');
+    cells.forEach(cell => {
+      cell.addEventListener('click', (e) => this.handleClick(e));
+      cell.addEventListener('contextmenu', (e) => this.handleRightClick(e));
+    });
+
+    const smiley = this.container.querySelector('.smiley-button');
+    if (smiley) {
+      smiley.addEventListener('click', () => this.reset());
+    }
+
+    const diffButtons = this.container.querySelectorAll('[data-diff]');
+    diffButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.setDifficulty(btn.dataset.diff);
+      });
+    });
+  }
+
+  handleClick(e) {
+    const row = parseInt(e.target.dataset.row);
+    const col = parseInt(e.target.dataset.col);
+
+    if (this.game.gameOver) return;
+
+    this.game.revealCell(row, col);
+    this.updateGrid();
+    this.updateDisplay();
+
+    if (!this.timerInterval && this.game.startTime) {
+      this.timerInterval = setInterval(() => this.updateDisplay(), 1000);
+    }
+
+    if (this.game.gameOver) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+  }
+
+  handleRightClick(e) {
+    e.preventDefault();
+    const row = parseInt(e.target.dataset.row);
+    const col = parseInt(e.target.dataset.col);
+
+    if (this.game.gameOver) return;
+
+    this.game.toggleFlag(row, col);
+    this.updateGrid();
+    this.updateDisplay();
+  }
+}
+
+module.exports = MinesweeperRenderer;
