@@ -194,4 +194,5 @@ class Minesweeper {
   }
 }
 
-module.exports = Minesweeper;
+window.Minesweeper = Minesweeper;
+

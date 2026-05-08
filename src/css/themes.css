@@ -1,0 +1,398 @@
+:root {
+  --transition-speed: 0.3s;
+  --cell-size: 32px;
+  --cell-gap: 3px;
+  --cell-size-sm: 28px;
+  --cell-gap-sm: 2px;
+
+  --bg-body: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --bg-container: rgba(255, 255, 255, 0.08);
+  --bg-container-border: rgba(255, 255, 255, 0.1);
+  --bg-container-shadow: rgba(0, 0, 0, 0.4);
+  --bg-panel: rgba(0, 0, 0, 0.3);
+  --bg-panel-inner: rgba(0, 0, 0, 0.4);
+  --bg-grid: rgba(0, 0, 0, 0.2);
+  --bg-cell: rgba(255, 255, 255, 0.1);
+  --bg-cell-revealed: rgba(255, 255, 255, 0.05);
+  --bg-cell-hover: rgba(0, 212, 255, 0.2);
+  --bg-cell-mine: rgba(255, 107, 107, 0.3);
+  --bg-overlay: rgba(0, 0, 0, 0.7);
+  --bg-gameover: rgba(255, 255, 255, 0.1);
+  --bg-btn: rgba(255, 255, 255, 0.05);
+  --bg-btn-hover: rgba(0, 212, 255, 0.1);
+  --bg-btn-active: rgba(0, 212, 255, 0.2);
+  --bg-smiley: rgba(255, 255, 255, 0.1);
+  --bg-smiley-hover: rgba(255, 255, 255, 0.2);
+  --bg-counter: rgba(0, 0, 0, 0.4);
+  --bg-dropdown: rgba(30, 30, 50, 0.95);
+
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-btn: #b0b0b0;
+  --text-btn-active: #00d4ff;
+  --btn-hover-text: #00d4ff;
+  --text-counter: #ff6b6b;
+  --text-timer: #4ecdc4;
+  --text-flagged: #4ecdc4;
+  --text-num-1: #4fc3f7;
+  --text-num-2: #81c784;
+  --text-num-3: #e57373;
+  --text-num-4: #7986cb;
+  --text-num-5: #ffb74d;
+  --text-num-6: #4dd0e1;
+  --text-num-7: #ba68c8;
+  --text-num-8: #90a4ae;
+
+  --accent: #00d4ff;
+  --accent-glow: rgba(0, 212, 255, 0.5);
+  --accent-glow-subtle: rgba(0, 212, 255, 0.3);
+  --accent-glow-light: rgba(0, 212, 255, 0.1);
+  --accent-btn: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+
+  --border-btn: rgba(0, 212, 255, 0.3);
+  --border-btn-hover: rgba(0, 212, 255, 0.5);
+  --border-btn-active: #00d4ff;
+  --border-cell: rgba(255, 255, 255, 0.1);
+  --border-cell-revealed: rgba(255, 255, 255, 0.05);
+  --border-cell-mine: #ff6b6b;
+  --border-container: rgba(255, 255, 255, 0.1);
+  --border-gameover: rgba(255, 255, 255, 0.2);
+  --border-dropdown: rgba(0, 212, 255, 0.4);
+
+  --shadow-container: 0 8px 32px var(--bg-container-shadow);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-btn-active: 0 0 15px var(--accent-glow-subtle);
+  --shadow-hover: 0 0 15px var(--accent-glow-subtle);
+  --shadow-btn-hover: 0 0 20px var(--accent-glow-subtle);
+  --shadow-cell-hover: 0 0 15px var(--accent-glow-subtle);
+  --shadow-play-btn-hover: 0 0 25px var(--accent-glow);
+  --shadow-gameover: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --shadow-smiley-hover: 0 0 20px var(--accent-glow-subtle);
+  --shadow-text-glow: 0 0 20px;
+  --shadow-counter-glow: 0 0 10px rgba(255, 107, 107, 0.5);
+  --shadow-timer-glow: 0 0 10px rgba(78, 205, 196, 0.5);
+  --shadow-flagged-glow: 0 0 10px rgba(78, 205, 196, 0.5);
+
+  --blur-container: 20px;
+  --blur-cell: 10px;
+  --blur-overlay: 5px;
+  --blur-gameover: 20px;
+
+  --radius-container: 16px;
+  --radius-cell: 6px;
+  --radius-cell-sm: 4px;
+  --radius-panel: 10px;
+  --radius-btn: 8px;
+  --radius-counter: 6px;
+  --radius-smiley: 10px;
+  --radius-gameover: 20px;
+  --radius-play-btn: 10px;
+
+  --font-mono: 'Courier New', monospace;
+}
+
+.theme-classic {
+  --bg-body: #c0c0c0;
+  --bg-container: #d4d0c8;
+  --bg-container-border: #808080;
+  --bg-container-shadow: rgba(0, 0, 0, 0.3);
+  --bg-panel: #c0c0c0;
+  --bg-panel-inner: #c0c0c0;
+  --bg-grid: #c0c0c0;
+  --bg-cell: #c0c0c0;
+  --bg-cell-revealed: #d4d0c8;
+  --bg-cell-hover: #d4d0c8;
+  --bg-cell-mine: #ff0000;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  --bg-gameover: #d4d0c8;
+  --bg-btn: #c0c0c0;
+  --bg-btn-hover: #d4d0c8;
+  --bg-btn-active: #d4d0c8;
+  --bg-smiley: #c0c0c0;
+  --bg-smiley-hover: #d4d0c8;
+  --bg-counter: #000000;
+
+  --text-primary: #000000;
+  --text-secondary: #404040;
+  --text-btn: #000000;
+  --text-btn-active: #000080;
+  --btn-hover-text: #000080;
+  --text-counter: #ff0000;
+  --text-timer: #ff0000;
+  --text-flagged: #ff0000;
+  --text-num-1: #0000ff;
+  --text-num-2: #008000;
+  --text-num-3: #ff0000;
+  --text-num-4: #000080;
+  --text-num-5: #800000;
+  --text-num-6: #008080;
+  --text-num-7: #000000;
+  --text-num-8: #808080;
+
+  --accent: #000080;
+  --accent-glow: rgba(0, 0, 128, 0.5);
+  --accent-glow-subtle: rgba(0, 0, 128, 0.3);
+  --accent-glow-light: rgba(0, 0, 128, 0.1);
+  --accent-btn: linear-gradient(135deg, #000080 0%, #000040 100%);
+
+  --border-btn: #808080;
+  --border-btn-hover: #404040;
+  --border-btn-active: #000080;
+  --border-cell: #808080;
+  --border-cell-revealed: #808080;
+  --border-cell-mine: #ff0000;
+  --border-container: #808080;
+  --border-gameover: #808080;
+  --border-dropdown: #808080;
+  --bg-dropdown: #d4d0c8;
+  --shadow-dropdown: 1px 1px 0 #000;
+
+  --shadow-container: none;
+  --shadow-btn-active: none;
+  --shadow-hover: none;
+  --shadow-btn-hover: none;
+  --shadow-cell-hover: none;
+  --shadow-play-btn-hover: none;
+  --shadow-gameover: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --shadow-smiley-hover: none;
+  --shadow-text-glow: none;
+  --shadow-counter-glow: none;
+  --shadow-timer-glow: none;
+  --shadow-flagged-glow: none;
+
+  --blur-container: 0px;
+  --blur-cell: 0px;
+  --blur-overlay: 0px;
+  --blur-gameover: 0px;
+
+  --radius-container: 0px;
+  --radius-cell: 0px;
+  --radius-cell-sm: 0px;
+  --radius-panel: 0px;
+  --radius-btn: 0px;
+  --radius-counter: 0px;
+  --radius-smiley: 0px;
+  --radius-gameover: 0px;
+  --radius-play-btn: 0px;
+
+  --font-mono: 'Courier New', monospace;
+}
+
+.theme-space {
+  --bg-body: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #2d1b4e 100%);
+  --bg-container: rgba(45, 27, 78, 0.6);
+  --bg-container-border: rgba(123, 104, 238, 0.3);
+  --bg-container-shadow: rgba(0, 0, 0, 0.6);
+  --bg-panel: rgba(0, 0, 0, 0.5);
+  --bg-panel-inner: rgba(0, 0, 0, 0.6);
+  --bg-grid: rgba(0, 0, 0, 0.4);
+  --bg-cell: rgba(123, 104, 238, 0.15);
+  --bg-cell-revealed: rgba(123, 104, 238, 0.05);
+  --bg-cell-hover: rgba(123, 104, 238, 0.3);
+  --bg-cell-mine: rgba(255, 100, 100, 0.4);
+  --bg-overlay: rgba(0, 0, 0, 0.8);
+  --bg-gameover: rgba(45, 27, 78, 0.5);
+  --bg-btn: rgba(123, 104, 238, 0.1);
+  --bg-btn-hover: rgba(123, 104, 238, 0.2);
+  --bg-btn-active: rgba(123, 104, 238, 0.3);
+  --bg-smiley: rgba(123, 104, 238, 0.15);
+  --bg-smiley-hover: rgba(123, 104, 238, 0.3);
+  --bg-counter: rgba(0, 0, 0, 0.6);
+  --bg-dropdown: rgba(30, 20, 60, 0.95);
+
+  --text-primary: #e8e8ff;
+  --text-secondary: #a0a0d0;
+  --text-btn: #a0a0d0;
+  --text-btn-active: #7b68ee;
+  --btn-hover-text: #9b88ff;
+  --text-counter: #ff8888;
+  --text-timer: #88ddff;
+  --text-flagged: #88ddff;
+  --text-num-1: #88ccff;
+  --text-num-2: #88ff88;
+  --text-num-3: #ff8888;
+  --text-num-4: #aaaaff;
+  --text-num-5: #ffcc88;
+  --text-num-6: #88ffff;
+  --text-num-7: #dda8ff;
+  --text-num-8: #b0b0d0;
+
+  --accent: #7b68ee;
+  --accent-glow: rgba(123, 104, 238, 0.6);
+  --accent-glow-subtle: rgba(123, 104, 238, 0.4);
+  --accent-glow-light: rgba(123, 104, 238, 0.15);
+  --accent-btn: linear-gradient(135deg, #7b68ee 0%, #5a48cc 100%);
+
+  --border-btn: rgba(123, 104, 238, 0.3);
+  --border-btn-hover: rgba(123, 104, 238, 0.6);
+  --border-btn-active: #7b68ee;
+  --border-cell: rgba(123, 104, 238, 0.2);
+  --border-cell-revealed: rgba(123, 104, 238, 0.1);
+  --border-cell-mine: #ff6666;
+  --border-container: rgba(123, 104, 238, 0.3);
+  --border-gameover: rgba(123, 104, 238, 0.4);
+  --border-dropdown: rgba(123, 104, 238, 0.5);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.7);
+
+  --shadow-container: 0 8px 32px var(--bg-container-shadow);
+  --shadow-btn-active: 0 0 20px var(--accent-glow);
+  --shadow-hover: 0 0 15px var(--accent-glow-subtle);
+  --shadow-btn-hover: 0 0 25px var(--accent-glow-subtle);
+  --shadow-cell-hover: 0 0 20px var(--accent-glow-subtle);
+  --shadow-play-btn-hover: 0 0 30px var(--accent-glow);
+  --shadow-gameover: 0 20px 60px rgba(0, 0, 0, 0.7);
+  --shadow-smiley-hover: 0 0 25px var(--accent-glow-subtle);
+  --shadow-text-glow: 0 0 20px;
+  --shadow-counter-glow: 0 0 15px rgba(255, 136, 136, 0.5);
+  --shadow-timer-glow: 0 0 15px rgba(136, 221, 255, 0.5);
+  --shadow-flagged-glow: 0 0 15px rgba(136, 221, 255, 0.5);
+}
+
+.theme-ocean {
+  --bg-body: linear-gradient(135deg, #e6f3ff 0%, #cce6ff 50%, #99ccff 100%);
+  --bg-container: rgba(255, 255, 255, 0.85);
+  --bg-container-border: rgba(30, 136, 229, 0.3);
+  --bg-container-shadow: rgba(0, 60, 120, 0.2);
+  --bg-panel: rgba(200, 230, 255, 0.5);
+  --bg-panel-inner: rgba(200, 230, 255, 0.4);
+  --bg-grid: rgba(200, 230, 255, 0.3);
+  --bg-cell: rgba(255, 255, 255, 0.7);
+  --bg-cell-revealed: rgba(230, 243, 255, 0.5);
+  --bg-cell-hover: rgba(30, 136, 229, 0.15);
+  --bg-cell-mine: rgba(255, 87, 34, 0.2);
+  --bg-overlay: rgba(0, 60, 120, 0.4);
+  --bg-gameover: rgba(255, 255, 255, 0.9);
+  --bg-btn: rgba(230, 243, 255, 0.5);
+  --bg-btn-hover: rgba(30, 136, 229, 0.1);
+  --bg-btn-active: rgba(30, 136, 229, 0.2);
+  --bg-smiley: rgba(230, 243, 255, 0.6);
+  --bg-smiley-hover: rgba(200, 230, 255, 0.8);
+  --bg-counter: rgba(0, 60, 120, 0.1);
+  --bg-dropdown: rgba(240, 248, 255, 0.95);
+
+  --text-primary: #1a237e;
+  --text-secondary: #455a70;
+  --text-btn: #455a70;
+  --text-btn-active: #1e88e5;
+  --btn-hover-text: #1565c0;
+  --text-counter: #e64a19;
+  --text-timer: #1565c0;
+  --text-flagged: #1565c0;
+  --text-num-1: #1976d2;
+  --text-num-2: #388e3c;
+  --text-num-3: #d32f2f;
+  --text-num-4: #303f9f;
+  --text-num-5: #f57c00;
+  --text-num-6: #0097a7;
+  --text-num-7: #7b1fa2;
+  --text-num-8: #607d8b;
+
+  --accent: #1e88e5;
+  --accent-glow: rgba(30, 136, 229, 0.4);
+  --accent-glow-subtle: rgba(30, 136, 229, 0.25);
+  --accent-glow-light: rgba(30, 136, 229, 0.1);
+  --accent-btn: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+
+  --border-btn: rgba(30, 136, 229, 0.3);
+  --border-btn-hover: rgba(30, 136, 229, 0.5);
+  --border-btn-active: #1e88e5;
+  --border-cell: rgba(30, 136, 229, 0.15);
+  --border-cell-revealed: rgba(30, 136, 229, 0.1);
+  --border-cell-mine: #e53935;
+  --border-container: rgba(30, 136, 229, 0.2);
+  --border-gameover: rgba(30, 136, 229, 0.3);
+  --border-dropdown: rgba(30, 136, 229, 0.4);
+  --shadow-dropdown: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  --shadow-container: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --shadow-btn-active: 0 0 15px var(--accent-glow);
+  --shadow-hover: 0 0 15px var(--accent-glow);
+  --shadow-btn-hover: 0 0 20px var(--accent-glow);
+  --shadow-cell-hover: 0 0 15px var(--accent-glow-subtle);
+  --shadow-play-btn-hover: 0 0 25px var(--accent-glow);
+  --shadow-gameover: 0 20px 60px rgba(0, 60, 120, 0.3);
+  --shadow-smiley-hover: 0 0 15px var(--accent-glow);
+  --shadow-text-glow: 0 0 10px;
+  --shadow-counter-glow: 0 0 10px rgba(230, 74, 25, 0.3);
+  --shadow-timer-glow: 0 0 10px rgba(21, 101, 192, 0.3);
+  --shadow-flagged-glow: 0 0 10px rgba(21, 101, 192, 0.3);
+}
+
+.theme-candy {
+  --bg-body: linear-gradient(135deg, #ffc0f0 0%, #ffb0e0 50%, #cc99ff 100%);
+  --bg-container: rgba(255, 255, 255, 0.75);
+  --bg-container-border: rgba(233, 30, 99, 0.3);
+  --bg-container-shadow: rgba(150, 50, 150, 0.2);
+  --bg-panel: rgba(255, 200, 240, 0.5);
+  --bg-panel-inner: rgba(255, 200, 240, 0.4);
+  --bg-grid: rgba(255, 200, 240, 0.3);
+  --bg-cell: rgba(255, 255, 255, 0.8);
+  --bg-cell-revealed: rgba(255, 240, 245, 0.5);
+  --bg-cell-hover: rgba(255, 105, 180, 0.2);
+  --bg-cell-mine: rgba(233, 30, 99, 0.2);
+  --bg-overlay: rgba(150, 50, 150, 0.4);
+  --bg-gameover: rgba(255, 255, 255, 0.9);
+  --bg-btn: rgba(255, 200, 240, 0.5);
+  --bg-btn-hover: rgba(255, 105, 180, 0.15);
+  --bg-btn-active: rgba(255, 105, 180, 0.25);
+  --bg-smiley: rgba(255, 200, 240, 0.6);
+  --bg-smiley-hover: rgba(255, 200, 240, 0.8);
+  --bg-counter: rgba(150, 50, 150, 0.1);
+  --bg-dropdown: rgba(255, 240, 245, 0.95);
+
+  --text-primary: #ad1457;
+  --text-secondary: #7b4f6e;
+  --text-btn: #7b4f6e;
+  --text-btn-active: #e91e63;
+  --btn-hover-text: #c2185b;
+  --text-counter: #e91e63;
+  --text-timer: #9c27b0;
+  --text-flagged: #9c27b0;
+  --text-num-1: #2196f3;
+  --text-num-2: #8bc34a;
+  --text-num-3: #f44336;
+  --text-num-4: #673ab7;
+  --text-num-5: #ff9800;
+  --text-num-6: #00bcd4;
+  --text-num-7: #9c27b0;
+  --text-num-8: #607d8b;
+
+  --accent: #e91e63;
+  --accent-glow: rgba(233, 30, 99, 0.4);
+  --accent-glow-subtle: rgba(233, 30, 99, 0.25);
+  --accent-glow-light: rgba(233, 30, 99, 0.1);
+  --accent-btn: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+
+  --border-btn: rgba(233, 30, 99, 0.3);
+  --border-btn-hover: rgba(233, 30, 99, 0.5);
+  --border-btn-active: #e91e63;
+  --border-cell: rgba(233, 30, 99, 0.15);
+  --border-cell-revealed: rgba(233, 30, 99, 0.1);
+  --border-cell-mine: #e91e63;
+  --border-container: rgba(233, 30, 99, 0.2);
+  --border-gameover: rgba(233, 30, 99, 0.3);
+  --border-dropdown: rgba(233, 30, 99, 0.4);
+  --shadow-dropdown: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  --shadow-container: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --shadow-btn-active: 0 0 15px var(--accent-glow);
+  --shadow-hover: 0 0 15px var(--accent-glow);
+  --shadow-btn-hover: 0 0 20px var(--accent-glow);
+  --shadow-cell-hover: 0 0 15px var(--accent-glow-subtle);
+  --shadow-play-btn-hover: 0 0 25px var(--accent-glow);
+  --shadow-gameover: 0 20px 60px rgba(150, 50, 150, 0.3);
+  --shadow-smiley-hover: 0 0 15px var(--accent-glow);
+  --shadow-text-glow: 0 0 10px;
+  --shadow-counter-glow: 0 0 10px rgba(233, 30, 99, 0.3);
+  --shadow-timer-glow: 0 0 10px rgba(156, 39, 176, 0.3);
+  --shadow-flagged-glow: 0 0 10px rgba(156, 39, 176, 0.3);
+
+  --radius-cell: 10px;
+  --radius-container: 20px;
+  --radius-panel: 14px;
+  --radius-btn: 12px;
+  --radius-counter: 10px;
+  --radius-smiley: 14px;
+  --radius-gameover: 25px;
+  --radius-play-btn: 14px;
+}
