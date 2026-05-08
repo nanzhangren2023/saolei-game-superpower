@@ -1,18 +1,20 @@
-const Minesweeper = require('./Minesweeper');
-
 class MinesweeperRenderer {
   constructor(container) {
     this.container = container;
     this.difficulty = 'beginner';
     this.game = null;
     this.timerInterval = null;
-    this.gameInstance = typeof module !== 'undefined' && module.exports ? Minesweeper : window.Minesweeper;
+    this.gameInstance = window.Minesweeper;
+    this.themeManager = new ThemeManager();
+    this.themeDropdownOpen = false;
   }
 
   init() {
+    this.themeManager.apply(this.themeManager.loadTheme());
     this.game = new this.gameInstance(this.difficulty);
     this.render();
     this.bindEvents();
+    this.bindThemeEvents();
   }
 
   render() {
@@ -25,10 +27,23 @@ class MinesweeperRenderer {
       }
     }
 
+    const currentTheme = this.themeManager.getCurrentTheme();
+    const smileyIcon = this.themeManager.getThemeIcon('smiley', 'default');
+
     this.container.innerHTML = `
       <div class="game-container">
         <div class="game-header">
           <h1>扫雷</h1>
+          <div class="theme-selector">
+            <button class="theme-selector-btn" data-testid="theme-selector">
+              🎨 <span id="theme-name">${currentTheme.name}</span> ▼
+            </button>
+            <div class="theme-selector-dropdown" id="theme-dropdown">
+              ${Object.entries(this.themeManager.getAllThemes()).map(([key, theme]) =>
+                `<div class="theme-option ${this.themeManager.currentTheme === key ? 'active' : ''}" data-theme="${key}">${theme.name}</div>`
+              ).join('')}
+            </div>
+          </div>
           <div class="difficulty-selector">
             <button data-diff="beginner" class="${this.difficulty === 'beginner' ? 'active' : ''}">初级</button>
             <button data-diff="intermediate" class="${this.difficulty === 'intermediate' ? 'active' : ''}">中级</button>
@@ -37,7 +52,7 @@ class MinesweeperRenderer {
         </div>
         <div class="game-panel">
           <div class="mine-counter">010</div>
-          <button class="smiley-button">😊</button>
+          <button class="smiley-button" data-testid="smiley-button">${smileyIcon}</button>
           <div class="timer">000</div>
         </div>
         <div class="grid" style="--cols: ${cols};">
@@ -48,7 +63,11 @@ class MinesweeperRenderer {
   }
 
   updateGrid() {
+    if (!this.game) return;
     const grid = this.game.getGrid();
+    const mineIcon = this.themeManager.getThemeIcon('mine');
+    const flagIcon = this.themeManager.getThemeIcon('flag');
+
     for (let row = 0; row < grid.length; row++) {
       for (let col = 0; col < grid[row].length; col++) {
         const cell = this.container.querySelector(`[data-row="${row}"][data-col="${col}"]`);
@@ -57,8 +76,15 @@ class MinesweeperRenderer {
         const cellData = grid[row][col];
         cell.className = 'cell';
         cell.removeAttribute('data-number');
+        cell.textContent = '';
 
-        if (cellData.revealed) {
+        if (cellData.flagged) {
+          cell.classList.add('flagged');
+          cell.textContent = flagIcon;
+        } else if (cellData.hasMine && this.game.gameOver) {
+          cell.classList.add('mine');
+          cell.textContent = mineIcon;
+        } else if (cellData.revealed) {
           cell.classList.add('revealed');
           if (cellData.neighborMines > 0) {
             cell.textContent = cellData.neighborMines;
@@ -67,19 +93,12 @@ class MinesweeperRenderer {
             cell.textContent = '';
           }
         }
-        if (cellData.flagged) {
-          cell.classList.add('flagged');
-          cell.textContent = '🚩';
-        }
-        if (cellData.hasMine && this.game.gameOver) {
-          cell.classList.add('mine');
-          cell.textContent = '💣';
-        }
       }
     }
   }
 
   updateDisplay() {
+    if (!this.game) return;
     const counter = this.container.querySelector('.mine-counter');
     if (counter) {
       counter.textContent = String(this.game.getMineCounter()).padStart(3, '0');
@@ -93,16 +112,7 @@ class MinesweeperRenderer {
       timer.textContent = String(Math.min(elapsed, 999)).padStart(3, '0');
     }
 
-    const smiley = this.container.querySelector('.smiley-button');
-    if (smiley) {
-      if (this.game.won) {
-        smiley.textContent = '😎';
-      } else if (this.game.gameOver) {
-        smiley.textContent = '😵';
-      } else {
-        smiley.textContent = '😊';
-      }
-    }
+    this.themeManager.updateSmiley(this.container, this.game);
   }
 
   setDifficulty(difficulty) {
@@ -140,14 +150,66 @@ class MinesweeperRenderer {
         this.setDifficulty(btn.dataset.diff);
       });
     });
+
+    const themeBtn = this.container.querySelector('[data-testid="theme-selector"]');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleDropdown();
+      });
+    }
+
+    const themeOptions = this.container.querySelectorAll('.theme-option');
+    themeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        this.selectTheme(option.dataset.theme);
+      });
+    });
+  }
+
+  toggleDropdown() {
+    const dropdown = this.container.querySelector('#theme-dropdown');
+    if (!dropdown) return;
+    this.themeDropdownOpen = !this.themeDropdownOpen;
+    dropdown.classList.toggle('show', this.themeDropdownOpen);
+  }
+
+  closeDropdown() {
+    const dropdown = this.container.querySelector('#theme-dropdown');
+    if (dropdown) {
+      dropdown.classList.remove('show');
+    }
+    this.themeDropdownOpen = false;
+  }
+
+  selectTheme(themeKey) {
+    this.themeManager.apply(themeKey);
+    const themeNameEl = this.container.querySelector('#theme-name');
+    if (themeNameEl) {
+      themeNameEl.textContent = this.themeManager.getCurrentTheme().name;
+    }
+    this.updateGrid();
+    this.updateDisplay();
+    this.closeDropdown();
+    this.container.querySelectorAll('.theme-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.theme === themeKey);
+    });
+  }
+
+  bindThemeEvents() {
+    document.addEventListener('click', (e) => {
+      const dropdown = this.container.querySelector('#theme-dropdown');
+      const themeBtn = this.container.querySelector('[data-testid="theme-selector"]');
+      if (this.themeDropdownOpen && dropdown && !dropdown.contains(e.target) && e.target !== themeBtn) {
+        this.closeDropdown();
+      }
+    });
   }
 
   handleClick(e) {
+    if (!this.game || this.game.gameOver) return;
     const row = parseInt(e.target.dataset.row);
     const col = parseInt(e.target.dataset.col);
-
-    if (this.game.gameOver) return;
-
     this.game.revealCell(row, col);
     this.updateGrid();
     this.updateDisplay();
@@ -159,20 +221,38 @@ class MinesweeperRenderer {
     if (this.game.gameOver) {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
+      if (this.game.congratulations) {
+        this.showCongratulations();
+      }
     }
+  }
+
+  showCongratulations() {
+    const overlay = document.createElement('div');
+    overlay.className = 'game-over-overlay';
+    overlay.innerHTML = `
+      <div class="game-over-content win">
+        <h2>🎉 恭喜你通关！ 🎉</h2>
+        <p>用时: ${this.getTimeString()}</p>
+        <button class="play-again-btn" onclick="this.closest('.game-over-overlay').remove(); game.reset();">再玩一次</button>
+      </div>
+    `;
+    this.container.appendChild(overlay);
+  }
+
+  getTimeString() {
+    if (!this.game || !this.game.startTime) return '0秒';
+    const elapsed = Math.floor((this.game.endTime - this.game.startTime) / 1000);
+    return elapsed + '秒';
   }
 
   handleRightClick(e) {
     e.preventDefault();
+    if (!this.game || this.game.gameOver) return;
     const row = parseInt(e.target.dataset.row);
     const col = parseInt(e.target.dataset.col);
-
-    if (this.game.gameOver) return;
-
     this.game.toggleFlag(row, col);
     this.updateGrid();
     this.updateDisplay();
   }
 }
-
-module.exports = MinesweeperRenderer;

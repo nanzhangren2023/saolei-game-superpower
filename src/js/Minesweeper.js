@@ -194,4 +194,3 @@ class Minesweeper {
   }
 }
 
-module.exports = Minesweeper;
