@@ -6,7 +6,7 @@
 - [x] 1.4 重命名 src/css/style.css 为 src/css/components.css 并引入 CSS 变量
 - [x] 1.5 创建 src/css/base.css（基础重置样式）
 - [x] 1.6 创建 src/css/themes.css（所有 5 个主题的 CSS 变量定义）
-- [ ] 1.7 创建 src/css/animations.css（动画样式提取）- 可选，当前动画已在 components.css 中
+- [x] 1.7 动画样式已直接内置在 components.css 中（fadeIn、shake）
 - [x] 1.8 更新 index.html 引用所有新文件
 
 ## 2. CSS 变量系统实现
