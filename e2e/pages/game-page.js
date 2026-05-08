@@ -66,7 +66,7 @@ export class GamePage {
   }
 
   // 获取主题选项列表
-  async getThemeOptions() {
+  getThemeOptions() {
     return this.themeDropdown.locator('.theme-option');
   }
 

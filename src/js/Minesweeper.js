@@ -194,3 +194,5 @@ class Minesweeper {
   }
 }
 
+window.Minesweeper = Minesweeper;
+

@@ -16,7 +16,7 @@ export default defineConfig({
   ],
   
   use: {
-    baseURL: 'http://127.0.0.1:8080',
+    baseURL: 'http://127.0.0.1:8081',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure'
@@ -38,8 +38,8 @@ export default defineConfig({
   ],
   
   webServer: {
-    command: 'npx http-server . -p 8080',
-    port: 8080,
+    command: 'npx http-server . -p 8081',
+    port: 8081,
     reuseExistingServer: true
   }
 });

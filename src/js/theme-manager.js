@@ -52,7 +52,11 @@ class ThemeManager {
 
   loadTheme() {
     try {
-      return localStorage.getItem('minesweeper-theme') || 'dark';
+      const stored = localStorage.getItem('minesweeper-theme');
+      if (stored && this.themes[stored]) {
+        return stored;
+      }
+      return 'dark';
     } catch {
       return 'dark';
     }
