@@ -24,6 +24,7 @@
   --bg-smiley: rgba(255, 255, 255, 0.1);
   --bg-smiley-hover: rgba(255, 255, 255, 0.2);
   --bg-counter: rgba(0, 0, 0, 0.4);
+  --bg-dropdown: rgba(30, 30, 50, 0.95);
 
   --text-primary: #ffffff;
   --text-secondary: #b0b0b0;
@@ -56,8 +57,10 @@
   --border-cell-mine: #ff6b6b;
   --border-container: rgba(255, 255, 255, 0.1);
   --border-gameover: rgba(255, 255, 255, 0.2);
+  --border-dropdown: rgba(0, 212, 255, 0.4);
 
   --shadow-container: 0 8px 32px var(--bg-container-shadow);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.5);
   --shadow-btn-active: 0 0 15px var(--accent-glow-subtle);
   --shadow-hover: 0 0 15px var(--accent-glow-subtle);
   --shadow-btn-hover: 0 0 20px var(--accent-glow-subtle);
@@ -140,6 +143,9 @@
   --border-cell-mine: #ff0000;
   --border-container: #808080;
   --border-gameover: #808080;
+  --border-dropdown: #808080;
+  --bg-dropdown: #d4d0c8;
+  --shadow-dropdown: 1px 1px 0 #000;
 
   --shadow-container: none;
   --shadow-btn-active: none;
@@ -192,6 +198,7 @@
   --bg-smiley: rgba(123, 104, 238, 0.15);
   --bg-smiley-hover: rgba(123, 104, 238, 0.3);
   --bg-counter: rgba(0, 0, 0, 0.6);
+  --bg-dropdown: rgba(30, 20, 60, 0.95);
 
   --text-primary: #e8e8ff;
   --text-secondary: #a0a0d0;
@@ -224,6 +231,8 @@
   --border-cell-mine: #ff6666;
   --border-container: rgba(123, 104, 238, 0.3);
   --border-gameover: rgba(123, 104, 238, 0.4);
+  --border-dropdown: rgba(123, 104, 238, 0.5);
+  --shadow-dropdown: 0 8px 32px rgba(0, 0, 0, 0.7);
 
   --shadow-container: 0 8px 32px var(--bg-container-shadow);
   --shadow-btn-active: 0 0 20px var(--accent-glow);
@@ -259,6 +268,7 @@
   --bg-smiley: rgba(230, 243, 255, 0.6);
   --bg-smiley-hover: rgba(200, 230, 255, 0.8);
   --bg-counter: rgba(0, 60, 120, 0.1);
+  --bg-dropdown: rgba(240, 248, 255, 0.95);
 
   --text-primary: #1a237e;
   --text-secondary: #455a70;
@@ -291,6 +301,8 @@
   --border-cell-mine: #e53935;
   --border-container: rgba(30, 136, 229, 0.2);
   --border-gameover: rgba(30, 136, 229, 0.3);
+  --border-dropdown: rgba(30, 136, 229, 0.4);
+  --shadow-dropdown: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
   --shadow-container: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   --shadow-btn-active: 0 0 15px var(--accent-glow);
@@ -326,6 +338,7 @@
   --bg-smiley: rgba(255, 200, 240, 0.6);
   --bg-smiley-hover: rgba(255, 200, 240, 0.8);
   --bg-counter: rgba(150, 50, 150, 0.1);
+  --bg-dropdown: rgba(255, 240, 245, 0.95);
 
   --text-primary: #ad1457;
   --text-secondary: #7b4f6e;
@@ -358,6 +371,8 @@
   --border-cell-mine: #e91e63;
   --border-container: rgba(233, 30, 99, 0.2);
   --border-gameover: rgba(233, 30, 99, 0.3);
+  --border-dropdown: rgba(233, 30, 99, 0.4);
+  --shadow-dropdown: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
   --shadow-container: 0 8px 32px var(--bg-container-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   --shadow-btn-active: 0 0 15px var(--accent-glow);

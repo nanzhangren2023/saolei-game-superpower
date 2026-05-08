@@ -33,8 +33,9 @@ class MinesweeperRenderer {
     this.container.innerHTML = `
       <div class="game-container">
         <div class="game-header">
-          <h1>扫雷</h1>
-          <div class="theme-selector">
+          <div class="header-top">
+            <h1>扫雷</h1>
+            <div class="theme-selector">
             <button class="theme-selector-btn" data-testid="theme-selector">
               🎨 <span id="theme-name">${currentTheme.name}</span> ▼
             </button>
@@ -42,6 +43,7 @@ class MinesweeperRenderer {
               ${Object.entries(this.themeManager.getAllThemes()).map(([key, theme]) =>
                 `<div class="theme-option ${this.themeManager.currentTheme === key ? 'active' : ''}" data-theme="${key}">${theme.name}</div>`
               ).join('')}
+            </div>
             </div>
           </div>
           <div class="difficulty-selector">
