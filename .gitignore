@@ -3,3 +3,5 @@ node_modules/
 *.log
 .worktrees/
 .codemate
+test-results/
+playwright-report/
