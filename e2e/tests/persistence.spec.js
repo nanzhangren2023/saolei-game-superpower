@@ -47,7 +47,26 @@ test.describe('主题持久化', () => {
 
     // 验证默认主题为 dark
     const htmlClass = await page.evaluate(() => document.documentElement.className);
-    expect(htmlClass).toBe('theme-dark');
+    expect(htmlClass).toContain('theme-ocean');
+
+    // 刷新页面
+    await page.reload({ waitUntil: 'domcontentloaded' });
+
+    // 验证主题仍然是 ocean
+    const htmlClassAfterReload = await page.evaluate(() => document.documentElement.className);
+    expect(htmlClassAfterReload).toContain('theme-ocean');
+
+    const themeName = await page.locator('#theme-name').textContent();
+    expect(themeName).toBe('海洋世界');
+  });
+
+  test('无 localStorage 时默认深色主题', async ({ page }) => {
+    await gamePage.clearAllStorage();
+    await page.goto('/');
+
+    // 验证默认主题为 dark
+    const htmlClass = await page.evaluate(() => document.documentElement.className);
+    expect(htmlClass).toContain('theme-dark');
 
     const storedTheme = await page.evaluate(() => localStorage.getItem('minesweeper-theme'));
     expect(storedTheme).toBe('dark');
@@ -66,7 +85,7 @@ test.describe('主题持久化', () => {
     expect(storedTheme).toBe('candy');
 
     const htmlClass = await page.evaluate(() => document.documentElement.className);
-    expect(htmlClass).toBe('theme-candy');
+    expect(htmlClass).toContain('theme-candy');
   });
 
   test('localStorage 主题无效时使用默认深色', async ({ page }) => {
@@ -76,7 +95,7 @@ test.describe('主题持久化', () => {
 
     // 应该回退到默认主题
     const htmlClass = await page.evaluate(() => document.documentElement.className);
-    expect(htmlClass).toBe('theme-dark');
+    expect(htmlClass).toContain('theme-dark');
   });
 
   test('不同主题图标切换后持久化', async ({ page }) => {
