@@ -195,4 +195,7 @@ class Minesweeper {
 }
 
 window.Minesweeper = Minesweeper;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = Minesweeper;
+}
 

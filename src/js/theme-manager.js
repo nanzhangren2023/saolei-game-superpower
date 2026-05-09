@@ -132,3 +132,8 @@ class ThemeManager {
     }
   }
 }
+
+window.ThemeManager = ThemeManager;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = ThemeManager;
+}

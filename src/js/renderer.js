@@ -1,3 +1,7 @@
+if (typeof module !== 'undefined' && module.exports) {
+  globalThis.ThemeManager = require('./theme-manager');
+}
+
 class MinesweeperRenderer {
   constructor(container) {
     this.container = container;
@@ -53,7 +57,7 @@ class MinesweeperRenderer {
           </div>
         </div>
         <div class="game-panel">
-          <div class="mine-counter">010</div>
+          <div class="mine-counter">${String(this.game.mineCount).padStart(3, '0')}</div>
           <button class="smiley-button" data-testid="smiley-button">${smileyIcon}</button>
           <div class="timer">000</div>
         </div>
@@ -257,4 +261,9 @@ class MinesweeperRenderer {
     this.updateGrid();
     this.updateDisplay();
   }
+}
+
+window.MinesweeperRenderer = MinesweeperRenderer;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = MinesweeperRenderer;
 }

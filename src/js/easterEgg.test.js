@@ -1,4 +1,4 @@
-const Minesweeper = require('../Minesweeper');
+const Minesweeper = require('./Minesweeper');
 
 describe('Easter Egg - Congratulations', () => {
   test('shows congratulations when player wins', () => {

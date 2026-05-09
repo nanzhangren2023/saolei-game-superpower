@@ -19,6 +19,16 @@ export class GamePage {
     this.timer = page.locator('.timer');
     this.mineCounter = page.locator('.mine-counter');
     this.smileyButton = page.locator('[data-testid="smiley-button"]');
+
+    // 难度选择器
+    this.difficultyButtons = page.locator('[data-diff]');
+    this.beginnerBtn = page.locator('[data-diff="beginner"]');
+    this.intermediateBtn = page.locator('[data-diff="intermediate"]');
+    this.expertBtn = page.locator('[data-diff="expert"]');
+
+    // 游戏结束覆盖层
+    this.winOverlay = page.locator('.game-over-overlay .win');
+    this.playAgainBtn = page.locator('.play-again-btn');
   }
 
   // 访问游戏页面
@@ -97,6 +107,69 @@ export class GamePage {
     await cell.click({ button: 'right' });
   }
 
+  // 切换难度
+  async setDifficulty(level) {
+    const btn = this.page.locator(`[data-diff="${level}"]`);
+    await btn.click();
+    await this.gameGrid.waitFor({ state: 'visible' });
+    // 等待网格重新渲染
+    await this.page.waitForTimeout(200);
+  }
+
+  // 获取当前活跃难度按钮
+  async getActiveDifficulty() {
+    const activeBtn = this.page.locator('[data-diff].active');
+    return activeBtn.getAttribute('data-diff');
+  }
+
+  // 点击笑脸按钮
+  async clickSmiley() {
+    await this.smileyButton.click();
+  }
+
+  // 获取计时器文本
+  async getTimerText() {
+    return this.timer.textContent();
+  }
+
+  // 获取地雷计数器文本
+  async getMineCounterText() {
+    return this.mineCounter.textContent();
+  }
+
+  // 指定单元格
+  getCell(row, col) {
+    return this.page.locator(`.cell[data-row="${row}"][data-col="${col}"]`);
+  }
+
+  // 检查单元格是否已揭示
+  async isCellRevealed(row, col) {
+    const cell = this.getCell(row, col);
+    const classes = await cell.getAttribute('class');
+    return classes.includes('revealed');
+  }
+
+  // 检查单元格是否被标记
+  async isCellFlagged(row, col) {
+    const cell = this.getCell(row, col);
+    const classes = await cell.getAttribute('class');
+    return classes.includes('flagged');
+  }
+
+  // 获取单元格文本内容
+  async getCellText(row, col) {
+    const cell = this.getCell(row, col);
+    return cell.textContent();
+  }
+
+  // 等待计时器增加
+  async waitForTimerIncrease() {
+    const initialTimer = await this.getTimerText();
+    await this.page.waitForTimeout(1500);
+    const newTimer = await this.getTimerText();
+    return newTimer !== initialTimer;
+  }
+
   // 获取 localStorage 中的主题
   async getStoredTheme() {
     return this.page.evaluate(() => localStorage.getItem('minesweeper-theme'));
@@ -158,5 +231,23 @@ export class GamePage {
   // 获取笑脸按钮图标
   async getSmileyIcon() {
     return this.smileyButton.textContent();
+  }
+
+  // 游戏是否结束
+  async isGameOver() {
+    return this.page.evaluate(() => {
+      const overlay = document.querySelector('.game-over-overlay');
+      return overlay !== null;
+    });
+  }
+
+  // 是否显示胜利覆盖层
+  async isWinVisible() {
+    return this.winOverlay.isVisible().catch(() => false);
+  }
+
+  // 点击"再玩一次"按钮
+  async clickPlayAgain() {
+    await this.playAgainBtn.click();
   }
 }
